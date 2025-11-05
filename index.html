@@ -1,150 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Seppe Sleeckx - Portfolio</title>
-  <link rel="stylesheet" href="styles.css">
+  <title>Seppe Sleeckx Portfolio</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
 </head>
 
-<!--javascript-->
-<script>
-function openModal(id) {
-  document.getElementById(id).style.display = "flex";
-}
-
-function closeModal(id) {
-  document.getElementById(id).style.display = "none";
-}
-
-function updateCarouselButtons() {
-  const container = document.querySelector('.project-list');
-  const leftBtn = document.querySelector('.carousel-btn.left');
-  const rightBtn = document.querySelector('.carousel-btn.right');
-
-  if (container.scrollLeft <= 0) {
-    leftBtn.classList.add('disabled');
-  } else {
-    leftBtn.classList.remove('disabled');
-  }
-
-  if (container.scrollLeft + container.clientWidth >= container.scrollWidth - 1) {
-    rightBtn.classList.add('disabled');
-  } else {
-    rightBtn.classList.remove('disabled');
-  }
-}
-
-const projectList = document.querySelector('.project-list');
-projectList.addEventListener('scroll', updateCarouselButtons);
-
-function scrollProjects(direction) {
-  const container = document.querySelector('.project-list');
-  const cardWidth = container.querySelector('.project-card').offsetWidth + 24;
-  container.scrollBy({ left: direction * cardWidth, behavior: 'smooth' });
-
-  setTimeout(updateCarouselButtons, 300);
-}
-</script>
-
 <body>
+  <div class="layout">
+    <!-- LEFT: 3D Scene -->
+    <div class="scene-container">
+      <script type="module" src="./src/main.js"></script>
+    </div>
 
-  <!--Banner-->
-  <header>
-    <h1>Seppe Sleeckx</h1>
-    <nav>
-      <a href="#projects">Projects</a>
-      <a href="#about">About</a>
-      <a href="#contact">Contact</a>
-    </nav>
-  </header>
+    <!-- RIGHT: Portfolio Info -->
+    <aside class="info-panel">
+      <!--<img src="./images/ProfilePicture.jpg" alt="ProfilePicture" class="profile-pic">-->
+      <h1>Seppe Sleeckx</h1>
+      <h2>Software Developer</h2>
 
-  <!--Projects-->
-  <section id="projects">
-  <h2>Projects</h2>
-  <div class="project-carousel">
-    <button class="carousel-btn left" onclick="scrollProjects(-1)">
-        <img src="images/carousel-arrow.svg" alt="Left arrow">
-    </button>
-    <div class="project-list">
-      
-      <!-- Project 1 -->
-      <div class="project-card" onclick="openModal('project1')">
-        <img src="images/Lance-a-lot-cover.png" alt="Lance-a-lot-cover" class="project-image">
-        <div class="project-info">
-          <h3>Lance a lot</h3>
-          <span class="project-date">2024</span>
+      <p>
+        Heyo!!! Welcome to my portfolio page, where you can find info on some of my past projects and maybe, in the future, some more funsies I'm working on.
+        I'm a student at Howest-DAE studying game development, and I like programming and creating fun things! I have experience in C++, C#, JavaScript, and more... 
+        but no matter the programming language, my main goal is to create things that people can enjoy and are fun to toy around with :) .
+        <br>
+        <br>
+        (P.S. You can find info on some of my old work by checking it out on the console. Try pressing some of the buttons...)
+      </p>
+
+      <div class="contact-section">
+        <h3 class="contact-title">Contact</h3>
+        <div class="contact-info">
+          <p><strong>Email:</strong> <a href="mailto:seppe.sleeckx@gmail.com">seppe.sleeckx@gmail.com</a></p>
         </div>
       </div>
 
-      <!-- Project 2 -->
-      <div class="project-card" onclick="openModal('project2')">
-        <img src="images/project2-cover.jpg" alt="Project 2 Cover" class="project-image">
-        <div class="project-info">
-          <h3>Project 2</h3>
-          <span class="project-date">2023</span>
-        </div>
-      </div>
-
-      <!-- Add more projects here -->
-
-    </div>
-    <button class="carousel-btn right" onclick="scrollProjects(1)">
-        <img src="images/carousel-arrow.svg" alt="Right arrow">
-    </button>
+      <footer>
+        <p class="copyright">© 2025 Seppe Sleeckx</p>
+      </footer>
+    </aside>
   </div>
-</section>
-
-<!-- Modal 1 -->
-<div id="project1" class="modal">
-  <div class="modal-content">
-    <span class="close" onclick="closeModal('project1')">&times;</span>
-    <h3>Project 1</h3>
-    <div class="video-container">
-      <iframe width="560" height="315"
-        src="https://www.youtube.com/embed/YOUR_VIDEO_ID"
-        frameborder="0" allowfullscreen>
-      </iframe>
-    </div>
-    <p>This is a description of Project 1. Add details here.</p>
-  </div>
-</div>
-
-<!-- Modal 2 -->
-<div id="project2" class="modal">
-  <div class="modal-content">
-    <span class="close" onclick="closeModal('project2')">&times;</span>
-    <h3>Project 2</h3>
-    <div class="video-container">
-      <iframe width="560" height="315"
-        src="https://www.youtube.com/embed/YOUR_VIDEO_ID"
-        frameborder="0" allowfullscreen>
-      </iframe>
-    </div>
-    <p>This is a description of Project 2. Add details here.</p>
-  </div>
-</div>
-
-  <!--About-->
-  <section id="about" class="grey-section">
-    <div class="content">
-        <h2>About</h2>
-        <p>Hi, My name is Seppe Sleeckx and I'm a student at Howest currently studying game development. I've worked on multiple projects both as solo dev and in group.
-            I have experience in C++ and C# programming and using tools such as unity, unreal engine, blender,... in order to make games and other fun digital playthings.
-        </p>
-    </div>
-  </section>
-
-  <!--Contact information-->
-  <section id="contact" class="grey-section center-text">
-    <h2>Contact</h2>
-    <p>Email: seppe.sleeckx@gmail.com</p>
-    <p>LinkedIn: <a href="www.linkedin.com/in/seppe-sleeckx">www.linkedin.com/in/seppe-sleeckx</a></p>
-  </section>
-
 </body>
-</html>
 
-<script>
-    updateCarouselButtons();
-</script>
+</html>

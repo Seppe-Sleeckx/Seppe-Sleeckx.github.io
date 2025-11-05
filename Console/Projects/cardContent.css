@@ -1,0 +1,122 @@
+body {
+  font-family: 'DM Sans';
+  background: #222;
+  color: #cdcdcd;
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  overflow: auto;
+}
+
+.project-container {
+  display: flex;
+  justify-content: flex-start;
+  gap: 30px;
+  width: 95%;
+  margin-top: 12.5%;
+
+  opacity: 0;
+  animation: openPage 0.6s ease forwards;
+  animation-fill-mode: forwards;
+}
+
+.project-image {
+  max-width: 300px; 
+  max-height: 300px; 
+  width: auto; 
+  height: auto;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+.project-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align:  justify;
+  max-width: 500px;
+}
+
+.project-text h1 {
+  font-size: 3rem;
+  margin: 0 0 10px;
+  text-align: left;
+}
+
+.project-text p {
+  font-size: 1.5rem;
+  line-height: 1.5;
+}
+
+@keyframes openPage {
+  0% {
+    opacity: 0;
+  }
+  80% {
+    opacity: 1;
+  }
+  100%{
+    opacity: 1;
+  }
+}
+
+.icon-btn {
+  position: fixed;
+  top: 45px;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  backdrop-filter: blur(5px);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background 0.25s ease, transform 0.25s ease, opacity 0.25s ease;
+}
+
+.icon-btn:hover {
+  transform: scale(1.1);
+}
+
+.close-btn {
+  right: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  font-size: 1.4rem;
+  color: #fff;
+}
+
+.close-btn span {
+  display: inline-block;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.close-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.close-btn:hover span {
+  transform: scale(1.2);
+  opacity: 0.9;
+}
+
+.itch-btn {
+  right: 70px; /* space it left of the close button */
+  background-color: #FA5C5C; 
+  border: 1px solid #FA5C5C;
+}
+
+.itch-btn img {
+  width: 20px;
+  height: 20px;
+  display: block;
+  filter: brightness(1); /* keeps logo visible on colored background */
+}
+
+.itch-btn:hover {
+  background-color: #FF7676; 
+  border-color: #FF7676;
+}
