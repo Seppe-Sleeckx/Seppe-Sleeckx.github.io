@@ -71,6 +71,16 @@ export function createThreeScene() {
   window.addEventListener("resize", resizeRenderer);
   resizeRenderer();
 
+  
+  let lastPixelRatio = window.devicePixelRatio;
+  function handleZoomChange() {
+    if (window.devicePixelRatio !== lastPixelRatio) {
+      lastPixelRatio = window.devicePixelRatio;
+      resizeRenderer(); // re-size both renderers
+    }
+  }
+  window.addEventListener("resize", handleZoomChange); //Mostly important for chrome as this is not an issue for firefox
+
   //Lighting
   const light = new THREE.DirectionalLight(0xffffff, 4);
   light.position.set(2, 4, 5);
