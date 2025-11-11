@@ -20,7 +20,7 @@ export function createThreeScene() {
 
   // CSS3D renderer
   const cssRenderer = new CSS3DRenderer();
-  renderer.setSize(container.clientWidth, container.clientHeight);
+  cssRenderer.setSize(container.clientWidth, container.clientHeight);
   cssRenderer.domElement.style.position = "absolute";
   cssRenderer.domElement.style.pointerEvents = 'auto';
   container.appendChild(cssRenderer.domElement);
@@ -41,10 +41,19 @@ export function createThreeScene() {
 
   //Resize to fit screen (max size)
   function resizeRenderer() {
+    resizeWebglRenderer();
+    resizeCss3DRenderer();
+  }
+  window.addEventListener("resize", resizeRenderer);
+  resizeRenderer(); //temp disabled
+
+  function resizeWebglRenderer() {
     const width = container.clientWidth;
     const height = container.clientHeight;
+    const pixelRatio = window.devicePixelRatio;
+
+    renderer.setPixelRatio(pixelRatio);
     renderer.setSize(width, height);
-    cssRenderer.setSize(width, height);
 
     const aspect = width / height;
     const worldAspect = WORLD_WIDTH / WORLD_HEIGHT;
@@ -68,8 +77,12 @@ export function createThreeScene() {
 
     camera.updateProjectionMatrix();
   }
-  window.addEventListener("resize", resizeRenderer);
-  resizeRenderer();
+
+  function resizeCss3DRenderer() {
+    const width = container.clientWidth;
+    const height = container.clientHeight;
+    cssRenderer.setSize(width, height);
+  }
 
   //Lighting
   const light = new THREE.DirectionalLight(0xffffff, 4);
@@ -107,45 +120,35 @@ export function createThreeScene() {
       if (child.isMesh) {
         // --- Console Screen ---
         if (child.name === "Console_Screen") {
-          console.log("Console screen world size:", child.scale.x, child.scale.y);
-
           child.material.visible = false;
 
           const iframe = document.createElement('iframe');
           iframe.src = "Console/console-ui.html";
-          iframe.style.transformOrigin = "center center";
           iframe.style.width = "800px";
           iframe.style.height = "600px";
-          iframe.style.border = "0";
           iframe.style.pointerEvents = "auto";
 
           const cssObject = new CSS3DObject(iframe);
+          cssObject.position.copy(child.position);
+          cssObject.rotation.copy(child.rotation);
+          cssObject.rotation.x -= Math.PI / 2;
 
-          // Position and rotation
-          child.updateMatrixWorld(true);
-          cssObject.position.copy(child.getWorldPosition(new THREE.Vector3()));
+          child.geometry.computeBoundingBox();
+          const bbox = child.geometry.boundingBox;
+          const size = new THREE.Vector3();
+          bbox.getSize(size);
+          const planeWidth = size.x * child.scale.x;
+          const planeHeight = size.z * child.scale.z;
+          console.log("planeWidth: " + planeWidth);
+          console.log("planeHeight: " + planeHeight);
+          //scale iframe to match plane
+          cssObject.scale.set(planeWidth / 800, planeHeight / 600, 1);
 
-          const q = new THREE.Quaternion();
-          child.getWorldQuaternion(q);
-          cssObject.quaternion.copy(q);
-
-
-          const localBBox = child.geometry.boundingBox;
-          const localSize = new THREE.Vector3();
-          localBBox.getSize(localSize);
-
-          const meshWidth = localSize.x;
-          const meshHeight = localSize.z;
-          const iframeWidth = 800;
-          const iframeHeight = 600;
-
-          const scaleX = meshWidth / iframeWidth;
-          const scaleY = meshHeight * 16.66; //TEMP fix
-          cssObject.scale.set(scaleX, scaleY, 1);
-
+          console.log("pos x: " + child.position.x + " pos y: " + child.position.y + " pos z: " + child.position.z);
           scene.add(cssObject);
           consoleIframe = iframe;
         }
+
 
         //-- Buttons --
         if (child.name.startsWith("Button")) {
